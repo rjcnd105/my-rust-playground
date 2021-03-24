@@ -1,3 +1,8 @@
+mod myFile;
+mod traitTest;
+
+use std::fs::File;
+use myFile::read;
 
 enum IpAddr {
     V4(String),
@@ -22,6 +27,19 @@ fn main() {
     let arr = [1,2,3,4];
     let vec = vec![1,2,3,4];
     let home = IpAddr::V4(String::from("127.0.0.1"));
+
+    // trait
+    let tweet = traitTest::Tweet {
+        username: String::from("horse_ebooks"),
+        content: String::from("of course, as you probably already know, people"),
+        reply: false,
+        retweet: false,
+    };
+
+
+    let f = File::open("Cargo.toml");
+
+    println!("myFile: {:#?}",f);
 
     println!("Coin: {:?}", value_in_cents(Coin::Nickel));
     println!("arr {:?}, {:?}", arr, arr.iter());

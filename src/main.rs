@@ -23,6 +23,7 @@ fn value_in_cents(coin: Coin) -> u32 {
         Coin::Quarter => 25,
     }
 }
+
 fn main() {
     let arr = [1,2,3,4];
     let vec = vec![1,2,3,4];

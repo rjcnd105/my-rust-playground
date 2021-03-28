@@ -66,7 +66,7 @@ pub fn notify<T: Summarizable>(item: T) {
 // // 여러개의 Trait 구현한 타입들을 받을때
 // fn some_function<T: Display + Clone, U: Clone + Debug>(t: T, u: U) -> i32 {
 
-// // 보기 쉽도록 where 절을 사용할 수 있음
+// // 제네릭에서 보기 쉽도록 where 절을 사용할 수 있음
 // fn some_function<T, U>(t: T, u: U) -> i32
 //     where T: Display + Clone,
 //           U: Clone + Debug

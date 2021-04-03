@@ -19,9 +19,13 @@
 // #[should_panic(expected = "...")]
 // 처럼 특정 메세지의 패닉이 났을때만 통과로 할 수 있음.
 
+/* #[ignore]를 추가해서 test 실행시 무시할 할 수 있음.*/
+/* $ cargo test -- --ignored */
+// 를 통해서 ignore 된 애들만 실행 가능
+
 
 #[cfg(test)]
-mod tests {
+pub mod my_test {
     use super::*;
 
     // Pass
@@ -62,7 +66,7 @@ mod tests {
 
     // Fail
     #[test]
-    fn nameTest() {
+    fn name_test() {
         let result = greeting("cargo");
         assert!(result.contains("cargo"),
                 "Greeting did not contain name(\"{}\"), value was \"{}\"", "cargo", result)
@@ -119,7 +123,7 @@ impl Rectangle {
 }
 
 pub fn add_two(a: i32) -> i32 {
-    a + 3
+    a + 2
 }
 
 pub fn greeting(name: &str) -> String {

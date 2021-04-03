@@ -26,6 +26,9 @@ impl Config {
 // 특성 오브젝트 Box - Box<Error>는 함수가 Error 특성을 구현하는 타입을 반환
 // 이런 방식은 다양한 에러 상황에 다른 타입의 오류 값을 반환 할 수 있는 유연성을 확보할 수 있다.
 pub fn run(config: Config) -> Result<(), Box<Error>>{
+    // ?는 Result를 반환하는 함수에서만 사용될 수 있습니다
+    // https://rinthel.github.io/rust-lang-book-ko/ch09-02-recoverable-errors-with-result.html#에러를-전파하기-위한-숏컷-
+    // ?는 Ok내의 값을 변수 f에게 반환해줄 것입니다. 만일 에러가 발생하면 ?는 전체 함수로부터 일찍 빠져나와 호출하는 코드에게 어떤 Err 값을 줄 것입니다.
     let mut f = File::open(config.filename)?;
 
     let mut contents = String::new();

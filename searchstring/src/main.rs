@@ -13,6 +13,7 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     // unwrap_or_else를 사용하면 panic!이 아닌 에러 처리를 직접 정의 할 수 있음.
+    // Ok로 포장한 내부 값을 반환함. 그러나 Err값이면 메소드는 closure의 코드를 호출합니다.
     let config = Config::new(&args).unwrap_or_else(|err| {
         println!("Problem parsing arguments: {}", err);
 

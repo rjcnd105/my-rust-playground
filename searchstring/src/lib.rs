@@ -36,12 +36,28 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>>{
     let mut contents = String::new();
     f.read_to_string(&mut contents)?;
 
-    println!("With text:\n{}", contents);
+
+    for line in search(&config.query, &contents) {
+        println!("{}", line)
+    }
 
     // Ok (())구문은 조금 이상하게 보일 수 있지만
     // ()를 사용하는 것과 마찬가지로 이는 사이드이펙트 없이 run을 호출하는 것을 나타내는 관용적인 방법입니다. 우리가 필요로 하는 값을 반환하지 않습니다.
     Ok(())
 }
+
+fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    let query = query.to_lowercase();
+    let mut results = Vec::new();
+
+    for line in contents.lines() {
+        if line.to_lowercase().contains(&query) {
+            results.push(line);
+        }
+    }
+
+    results
+}s
 
 #[cfg(test)]
 mod test {
@@ -60,4 +76,31 @@ Pick three.";
             search(query, contents)
         );
     }
+
+    #[test]
+    fn case_insensitive() {
+        let query = "rUsT";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Pick three.
+Trust me.";
+
+        assert_eq!(
+            vec!["Rust:", "Trust me."],
+            search_case_insensitive(query, contents)
+        );
+    }
+}
+
+pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    let mut results = Vec::new();
+
+    for line in contents.lines() {
+        if line.contains(query) {
+            results.push(line);
+        }
+    }
+
+    results
 }

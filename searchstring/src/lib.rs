@@ -1,5 +1,6 @@
 use std::error::Error;
 use std::fs::File;
+use std::env;
 
 //  std::io::prelude 는 파일 I/O를 포함한 I/O 작업을 위해 유용한 다양한 특성이 있음
 use std::io::prelude::*;
@@ -7,6 +8,7 @@ use std::io::prelude::*;
 pub struct Config {
     pub query: String,
     pub filename: String,
+    pub case_sensitive: bool,
 }
 
 impl Config {
@@ -19,7 +21,9 @@ impl Config {
         let query = args[1].clone();
         let filename = args[2].clone();
 
-        Ok(Config { query, filename })
+        let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
+
+        Ok(Config { query, filename, case_sensitive })
     }
 }
 
@@ -57,7 +61,7 @@ fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     }
 
     results
-}s
+}
 
 #[cfg(test)]
 mod test {

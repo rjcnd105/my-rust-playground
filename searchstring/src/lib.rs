@@ -21,6 +21,7 @@ impl Config {
         let query = args[1].clone();
         let filename = args[2].clone();
 
+        // mac terminal: export CASE_INSENSITIVE=1
         let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
 
         Ok(Config { query, filename, case_sensitive })
@@ -41,8 +42,14 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>>{
     f.read_to_string(&mut contents)?;
 
 
-    for line in search(&config.query, &contents) {
-        println!("{}", line)
+    let results = if config.case_sensitive {
+        search(&config.query, &contents)
+    } else {
+        search_case_insensitive(&config.query, &contents)
+    };
+
+    for line in results {
+        println!("{}", line);
     }
 
     // Ok (())구문은 조금 이상하게 보일 수 있지만

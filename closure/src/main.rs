@@ -58,7 +58,7 @@ fn el_move() {
     **/
     let equal_to_x = move |z| z == x;
 
-    println!("can't use x here: {:?}", x);
+    //println!("can't use x here: {:?}", x); // 에러남! x의 소유권은 이미 equal_to_x 가 가져갔음.
 
     let y = vec![1, 2, 3];
 
@@ -95,7 +95,7 @@ impl<T> Cacher<T>
     }
 }
 
-fn generate_workout(intensity: u32, random_number: u32) {
+pub fn generate_workout(intensity: u32, random_number: u32) {
     let mut expensive_result = Cacher::new(|num| {
         println!("calculating slowly...");
         thread::sleep(Duration::from_secs(2));
@@ -124,19 +124,14 @@ fn generate_workout(intensity: u32, random_number: u32) {
 }
 
 fn main() {
+    use super::*;
 
-    let x = vec![1, 2, 3];
-
-    let equal_to_x = move |z| z == x;
-
-    println!("can't use x here: {:?}", x);
-
-    let y = vec![1, 2, 3];
-
-    assert!(equal_to_x(y));
+    generate_workout(20, 2);
+    generate_workout(40, 3);
 }
 
 
+// 에러남
 #[test]
 fn call_with_different_values() {
     let mut c = Cacher::new(|a| a);
